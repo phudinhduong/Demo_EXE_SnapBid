@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <title>SnapBid - Đăng Nhập</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="../assets/img/apple-icon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="../assets/img/favicon.ico">
+
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/templatemo.css">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+
+    <!-- Load fonts style after rendering the layout styles -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" href="../assets/css/fontawesome.min.css">
+
+</head>
+
+<body>
+    <!-- Header không có nút đăng nhập -->
+    <nav class="navbar navbar-expand-lg navbar-light shadow">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a class="navbar-brand text-success logo h1 align-self-center" href="../index.html">
+                SnapBid
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </nav>
+    <!-- End Header -->
+
+    <!-- Login Form -->
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body p-5">
+                        <h1 class="h2 text-center mb-4 text-success">Đăng Nhập</h1>
+                        <!-- <div class="alert alert-info">
+                            <strong>Test Accounts:</strong><br>
+                            Seller account: seller / seller123<br>
+                            Customer account: customer / customer123
+                        </div> -->
+                        <form id="loginForm">
+                            <div class="mb-3">
+                                <label for="username" class="form-label">Tên đăng nhập</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-success text-white">
+                                        <i class="fas fa-user"></i>
+                                    </span>
+                                    <input type="text" class="form-control form-control-lg" id="username" placeholder="Nhập tên đăng nhập" required>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Mật khẩu</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-success text-white">
+                                        <i class="fas fa-lock"></i>
+                                    </span>
+                                    <input type="password" class="form-control form-control-lg" id="password" placeholder="Nhập mật khẩu" required>
+                                </div>
+                            </div>
+                            
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-success btn-lg">
+                                    <i class="fas fa-sign-in-alt me-2"></i>Đăng Nhập
+                                </button>
+                            </div>
+                            
+                            <div class="text-center mt-3">
+                                <a href="#" class="text-success">Quên mật khẩu?</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <p>Chưa có tài khoản? <a href="register.html" class="text-success fw-bold">Đăng ký ngay</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Login Form -->
+
+    <!-- Start Footer -->
+    <footer class="bg-dark" id="tempaltemo_footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 pt-5">
+                    <h2 class="h2 text-success border-bottom pb-3 border-light logo">SnapBid</h2>
+                    <ul class="list-unstyled text-light footer-link-list">
+                        <li>
+                            <i class="fas fa-map-marker-alt fa-fw"></i>
+                            123 Đường Luxury, TP.HCM
+                        </li>
+                        <li>
+                            <i class="fa fa-phone fa-fw"></i>
+                            <a class="text-decoration-none" href="tel:090-222-3456">090-222-3456</a>
+                        </li>
+                        <li>
+                            <i class="fa fa-envelope fa-fw"></i>
+                            <a class="text-decoration-none" href="mailto:info@snapbid.com">info@snapbid.com</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="w-100 bg-black py-3">
+                <div class="container">
+                    <div class="row pt-2">
+                        <div class="col-12">
+                            <p class="text-left text-light">
+                                Copyright &copy; 2023 SnapBid 
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer -->
+
+    <!-- Start Script -->
+    <script src="../assets/js/jquery-1.11.0.min.js"></script>
+    <script src="../assets/js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="../assets/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('loginForm');
+            
+            loginForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                
+                // Automatically determine role based on credentials
+                let role = null;
+                if (username === 'seller' && password === '123123') {
+                    role = 'seller';
+                } else if (username === 'customer' && password === '123123') {
+                    role = 'customer';
+                }
+                
+                // Check if credentials are valid
+                if (role) {
+                    // Save login information to localStorage
+                    localStorage.setItem('userRole', role);
+                    localStorage.setItem('username', username);
+                    
+                    // Redirect to home page
+                    window.location.href = 'index.html';
+                } else {
+                    alert('Tên đăng nhập hoặc mật khẩu không đúng!');
+                }
+            });
+        });
+    </script>
+    <!-- End Script -->
+</body>
+
+</html><!-- Header cho người bán (trong file dashboard.html) -->

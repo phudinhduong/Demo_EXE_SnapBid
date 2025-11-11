@@ -16,25 +16,20 @@
     <!-- Load fonts style after rendering the layout styles -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
     <link rel="stylesheet" href="assets/css/fontawesome.min.css">
-<!--
-    
-TemplateMo 559 Zay Shop
 
-https://templatemo.com/tm-559-zay-shop
-
--->
 </head>
 
 <body>
     <!-- Start Top Nav -->
+     <!-- là: @company sđt -->
     <nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block" id="templatemo_nav_top">
         <div class="container text-light">
             <div class="w-100 d-flex justify-content-between">
                 <div>
                     <i class="fa fa-envelope mx-2"></i>
-                    <a class="navbar-sm-brand text-light text-decoration-none" href="mailto:info@company.com">info@company.com</a>
+                    <a class="navbar-sm-brand text-light text-decoration-none" href="mailto:info@company.com">SnapBid@company.com</a>
                     <i class="fa fa-phone mx-2"></i>
-                    <a class="navbar-sm-brand text-light text-decoration-none" href="tel:010-020-0340">010-020-0340</a>
+                    <a class="navbar-sm-brand text-light text-decoration-none" href="tel:010-020-0340">090-222-3456</a>
                 </div>
                 <div>
                     <a class="text-light" href="https://fb.com/templatemo" target="_blank" rel="sponsored"><i class="fab fa-facebook-f fa-sm fa-fw me-2"></i></a>
@@ -49,11 +44,12 @@ https://templatemo.com/tm-559-zay-shop
 
 
     <!-- Header -->
+     <!-- là: SnapBid Home About -->
     <nav class="navbar navbar-expand-lg navbar-light shadow">
         <div class="container d-flex justify-content-between align-items-center">
 
             <a class="navbar-brand text-success logo h1 align-self-center" href="index.html">
-                Zay
+                SnapBid
             </a>
 
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -93,7 +89,29 @@ https://templatemo.com/tm-559-zay-shop
                         <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
                         <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">7</span>
                     </a>
-                    <a class="nav-icon position-relative text-decoration-none" href="#">
+                    <!-- Seller dropdown menu -->
+                    <div class="nav-item dropdown" id="sellerDropdown" style="display: none;">
+                        <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-fw fa-user text-dark mr-3"></i>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="seller-dashboard.html">Manage Products</a></li>
+                            <li><a class="dropdown-item" href="add-product.html">Add Product</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" onclick="logout()">Logout</a></li>
+                        </ul>
+                    </div>
+                    <!-- Customer dropdown menu -->
+                    <div class="nav-item dropdown" id="customerDropdown" style="display: none;">
+                        <a class="nav-link dropdown-toggle text-dark" href="#" id="customerDropdownMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-fw fa-user text-dark mr-3"></i>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="customerDropdownMenu">
+                            <li><a class="dropdown-item" href="#" onclick="logout()">Logout</a></li>
+                        </ul>
+                    </div>
+                    <!-- Default user icon when not logged in -->
+                    <a class="nav-icon position-relative text-decoration-none" href="login.html" id="defaultUserIcon">
                         <i class="fa fa-fw fa-user text-dark mr-3"></i>
                         <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">+99</span>
                     </a>
@@ -124,30 +142,35 @@ https://templatemo.com/tm-559-zay-shop
 
 
     <!-- Start Banner Hero -->
+     <!-- Current Bid Section -->
+      <!-- phần hiển thị các sản phẩm đấu giá hiện tại -->
     <div id="template-mo-zay-hero-carousel" class="carousel slide" data-bs-ride="carousel">
         <ol class="carousel-indicators">
             <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="0" class="active"></li>
             <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="1"></li>
             <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="2"></li>
+            <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="3"></li>
+            <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="4"></li>
         </ol>
         <div class="carousel-inner">
+            <!-- từng phần -->
             <div class="carousel-item active">
                 <div class="container">
                     <div class="row p-5">
                         <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
-                            <img class="img-fluid" src="./assets/img/banner_img_01.jpg" alt="">
+                            <img class="img-fluid" src="./assets/img/banner_img_01.jpg" alt="Sản phẩm đấu giá 1">
                         </div>
                         <div class="col-lg-6 mb-0 d-flex align-items-center">
                             <div class="text-align-left align-self-center">
-                                <h1 class="h1 text-success"><b>Zay</b> eCommerce</h1>
-                                <h3 class="h2">Tiny and Perfect eCommerce Template</h3>
+                                <h1 class="h1 text-success"><b>Luxury Watch</b></h1>
+                                <h3 class="h2">Giá khởi điểm: 1.000.000 VNĐ</h3>
                                 <p>
-                                    Zay Shop is an eCommerce HTML5 CSS template with latest version of Bootstrap 5 (beta 1). 
-                                    This template is 100% free provided by <a rel="sponsored" class="text-success" href="https://templatemo.com" target="_blank">TemplateMo</a> website. 
-                                    Image credits go to <a rel="sponsored" class="text-success" href="https://stories.freepik.com/" target="_blank">Freepik Stories</a>,
-                                    <a rel="sponsored" class="text-success" href="https://unsplash.com/" target="_blank">Unsplash</a> and
-                                    <a rel="sponsored" class="text-success" href="https://icons8.com/" target="_blank">Icons 8</a>.
+                                    Premium timepiece with original box and papers. Limited edition model.
                                 </p>
+                                <p class="h4"><strong>Giá hiện tại:</strong> <span id="current-bid-1">1.250.000 VNĐ</span></p>
+                                <p class="h5"><strong>Thời gian còn lại:</strong> <span id="countdown-1">1 ngày 02:30:15</span></p>
+                                <p><strong>Số lượt ra giá:</strong> <span id="bid-count-1">10</span></p>
+                                <a href="shop-single.html" class="btn btn-success btn-lg mt-3">Đấu giá ngay</a>
                             </div>
                         </div>
                     </div>
@@ -157,16 +180,19 @@ https://templatemo.com/tm-559-zay-shop
                 <div class="container">
                     <div class="row p-5">
                         <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
-                            <img class="img-fluid" src="./assets/img/banner_img_02.jpg" alt="">
+                            <img class="img-fluid" src="./assets/img/banner_img_02.jpg" alt="Sản phẩm đấu giá 2">
                         </div>
                         <div class="col-lg-6 mb-0 d-flex align-items-center">
                             <div class="text-align-left">
-                                <h1 class="h1">Proident occaecat</h1>
-                                <h3 class="h2">Aliquip ex ea commodo consequat</h3>
+                                <h1 class="h1">Designer Shoes</h1>
+                                <h3 class="h2">Giá khởi điểm: 500.000 VNĐ</h3>
                                 <p>
-                                    You are permitted to use this Zay CSS template for your commercial websites. 
-                                    You are <strong>not permitted</strong> to re-distribute the template ZIP file in any kind of template collection websites.
+                                    Limited edition sneakers in excellent condition. Rare colorway.
                                 </p>
+                                <p class="h4"><strong>Giá hiện tại:</strong> <span id="current-bid-2">750.000 VNĐ</span></p>
+                                <p class="h5"><strong>Thời gian còn lại:</strong> <span id="countdown-2">0 ngày 12:45:30</span></p>
+                                <p><strong>Số lượt ra giá:</strong> <span id="bid-count-2">8</span></p>
+                                <a href="shop-single.html" class="btn btn-success btn-lg mt-3">Đấu giá ngay</a>
                             </div>
                         </div>
                     </div>
@@ -176,16 +202,63 @@ https://templatemo.com/tm-559-zay-shop
                 <div class="container">
                     <div class="row p-5">
                         <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
-                            <img class="img-fluid" src="./assets/img/banner_img_03.jpg" alt="">
+                            <img class="img-fluid" src="./assets/img/banner_img_03.jpg" alt="Sản phẩm đấu giá 3">
                         </div>
                         <div class="col-lg-6 mb-0 d-flex align-items-center">
                             <div class="text-align-left">
-                                <h1 class="h1">Repr in voluptate</h1>
-                                <h3 class="h2">Ullamco laboris nisi ut </h3>
+                                <h1 class="h1">Vintage Camera</h1>
+                                <h3 class="h2">Giá khởi điểm: 2.000.000 VNĐ</h3>
                                 <p>
-                                    We bring you 100% free CSS templates for your websites. 
-                                    If you wish to support TemplateMo, please make a small contribution via PayPal or tell your friends about our website. Thank you.
+                                    Classic film camera from the 1970s, fully functional. Rare find.
                                 </p>
+                                <p class="h4"><strong>Giá hiện tại:</strong> <span id="current-bid-3">2.500.000 VNĐ</span></p>
+                                <p class="h5"><strong>Thời gian còn lại:</strong> <span id="countdown-3">2 ngày 08:15:00</span></p>
+                                <p><strong>Số lượt ra giá:</strong> <span id="bid-count-3">15</span></p>
+                                <a href="shop-single.html" class="btn btn-success btn-lg mt-3">Đấu giá ngay</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="container">
+                    <div class="row p-5">
+                        <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                            <img class="img-fluid" src="./assets/img/feature_prod_01.jpg" alt="Sản phẩm đấu giá 4">
+                        </div>
+                        <div class="col-lg-6 mb-0 d-flex align-items-center">
+                            <div class="text-align-left">
+                                <h1 class="h1">Fitness Equipment</h1>
+                                <h3 class="h2">Giá khởi điểm: 1.500.000 VNĐ</h3>
+                                <p>
+                                    Professional grade weight set, barely used. Complete home gym solution.
+                                </p>
+                                <p class="h4"><strong>Giá hiện tại:</strong> <span id="current-bid-4">1.800.000 VNĐ</span></p>
+                                <p class="h5"><strong>Thời gian còn lại:</strong> <span id="countdown-4">1 ngày 05:20:45</span></p>
+                                <p><strong>Số lượt ra giá:</strong> <span id="bid-count-4">12</span></p>
+                                <a href="shop-single.html" class="btn btn-success btn-lg mt-3">Đấu giá ngay</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="container">
+                    <div class="row p-5">
+                        <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                            <img class="img-fluid" src="./assets/img/feature_prod_02.jpg" alt="Sản phẩm đấu giá 5">
+                        </div>
+                        <div class="col-lg-6 mb-0 d-flex align-items-center">
+                            <div class="text-align-left">
+                                <h1 class="h1">Smartphone</h1>
+                                <h3 class="h2">Giá khởi điểm: 3.000.000 VNĐ</h3>
+                                <p>
+                                    Latest model smartphone, unlocked, like new condition. Factory sealed.
+                                </p>
+                                <p class="h4"><strong>Giá hiện tại:</strong> <span id="current-bid-5">3.500.000 VNĐ</span></p>
+                                <p class="h5"><strong>Thời gian còn lại:</strong> <span id="countdown-5">3 ngày 14:10:30</span></p>
+                                <p><strong>Số lượt ra giá:</strong> <span id="bid-count-5">22</span></p>
+                                <a href="shop-single.html" class="btn btn-success btn-lg mt-3">Đấu giá ngay</a>
                             </div>
                         </div>
                     </div>
@@ -203,39 +276,286 @@ https://templatemo.com/tm-559-zay-shop
 
 
     <!-- Start Categories of The Month -->
+        <!-- <section class="container py-5">
+            <div class="row text-center pt-3">
+                <div class="col-lg-6 m-auto">
+                    <h1 class="h1">Categories of The Month</h1>
+                    <p>
+                        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                        deserunt mollit anim id est laborum.
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-4 p-5 mt-3">
+                    <a href="#"><img src="./assets/img/category_img_01.jpg" class="rounded-circle img-fluid border"></a>
+                    <h5 class="text-center mt-3 mb-3">Watches</h5>
+                    <p class="text-center"><a class="btn btn-success">Go Shop</a></p>
+                </div>
+                <div class="col-12 col-md-4 p-5 mt-3">
+                    <a href="#"><img src="./assets/img/category_img_02.jpg" class="rounded-circle img-fluid border"></a>
+                    <h2 class="h5 text-center mt-3 mb-3">Shoes</h2>
+                    <p class="text-center"><a class="btn btn-success">Go Shop</a></p>
+                </div>
+                <div class="col-12 col-md-4 p-5 mt-3">
+                    <a href="#"><img src="./assets/img/category_img_03.jpg" class="rounded-circle img-fluid border"></a>
+                    <h2 class="h5 text-center mt-3 mb-3">Accessories</h2>
+                    <p class="text-center"><a class="btn btn-success">Go Shop</a></p>
+                </div>
+            </div>
+        </section> -->
+    <!-- End Categories of The Month -->
+
+    <!-- Start Closing Auctions -->
     <section class="container py-5">
         <div class="row text-center pt-3">
             <div class="col-lg-6 m-auto">
-                <h1 class="h1">Categories of The Month</h1>
+                <h1 class="h1">Closing Auctions</h1>
                 <p>
-                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-                    deserunt mollit anim id est laborum.
+                    These auctions are about to end. Bid now before it's too late!
                 </p>
             </div>
         </div>
         <div class="row">
-            <div class="col-12 col-md-4 p-5 mt-3">
-                <a href="#"><img src="./assets/img/category_img_01.jpg" class="rounded-circle img-fluid border"></a>
-                <h5 class="text-center mt-3 mb-3">Watches</h5>
-                <p class="text-center"><a class="btn btn-success">Go Shop</a></p>
-            </div>
-            <div class="col-12 col-md-4 p-5 mt-3">
-                <a href="#"><img src="./assets/img/category_img_02.jpg" class="rounded-circle img-fluid border"></a>
-                <h2 class="h5 text-center mt-3 mb-3">Shoes</h2>
-                <p class="text-center"><a class="btn btn-success">Go Shop</a></p>
-            </div>
-            <div class="col-12 col-md-4 p-5 mt-3">
-                <a href="#"><img src="./assets/img/category_img_03.jpg" class="rounded-circle img-fluid border"></a>
-                <h2 class="h5 text-center mt-3 mb-3">Accessories</h2>
-                <p class="text-center"><a class="btn btn-success">Go Shop</a></p>
+            <div class="col-12">
+                <div class="auctions-carousel position-relative">
+                    <div class="auctions-container d-flex overflow-auto pb-3" id="auctionsContainer">
+                        <!-- Auction Item 1 -->
+                        <div class="auction-item me-4 flex-shrink-0" style="width: 250px;">
+                            <div class="card h-100">
+                                <img src="./assets/img/category_img_01.jpg" class="card-img-top" alt="Auction Item">
+                                <div class="card-body d-flex flex-column">
+                                    <h5 class="card-title">Luxury Watch</h5>
+                                    <p class="card-text">Premium timepiece with original box and papers.</p>
+                                    <div class="mt-auto">
+                                        <div class="d-flex justify-content-between">
+                                            <small class="text-muted">Current Bid:</small>
+                                            <small class="fw-bold">$580</small>
+                                        </div>
+                                        <div class="d-flex justify-content-between mt-1">
+                                            <small class="text-muted">Time Left:</small>
+                                            <small class="fw-bold text-danger">2h 15m</small>
+                                        </div>
+                                        <a href="shop-single.html" class="btn btn-success w-100 mt-2">Place Bid</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Auction Item 2 -->
+                        <div class="auction-item me-4 flex-shrink-0" style="width: 250px;">
+                            <div class="card h-100">
+                                <img src="./assets/img/category_img_02.jpg" class="card-img-top" alt="Auction Item">
+                                <div class="card-body d-flex flex-column">
+                                    <h5 class="card-title">Designer Shoes</h5>
+                                    <p class="card-text">Limited edition sneakers in excellent condition.</p>
+                                    <div class="mt-auto">
+                                        <div class="d-flex justify-content-between">
+                                            <small class="text-muted">Current Bid:</small>
+                                            <small class="fw-bold">$220</small>
+                                        </div>
+                                        <div class="d-flex justify-content-between mt-1">
+                                            <small class="text-muted">Time Left:</small>
+                                            <small class="fw-bold text-danger">4h 30m</small>
+                                        </div>
+                                        <a href="shop-single.html" class="btn btn-success w-100 mt-2">Place Bid</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Auction Item 3 -->
+                        <div class="auction-item me-4 flex-shrink-0" style="width: 250px;">
+                            <div class="card h-100">
+                                <img src="./assets/img/category_img_03.jpg" class="card-img-top" alt="Auction Item">
+                                <div class="card-body d-flex flex-column">
+                                    <h5 class="card-title">Vintage Camera</h5>
+                                    <p class="card-text">Classic film camera from the 1970s, fully functional.</p>
+                                    <div class="mt-auto">
+                                        <div class="d-flex justify-content-between">
+                                            <small class="text-muted">Current Bid:</small>
+                                            <small class="fw-bold">$350</small>
+                                        </div>
+                                        <div class="d-flex justify-content-between mt-1">
+                                            <small class="text-muted">Time Left:</small>
+                                            <small class="fw-bold text-danger">6h 45m</small>
+                                        </div>
+                                        <a href="shop-single.html" class="btn btn-success w-100 mt-2">Place Bid</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Auction Item 4 -->
+                        <div class="auction-item me-4 flex-shrink-0" style="width: 250px;">
+                            <div class="card h-100">
+                                <img src="./assets/img/feature_prod_01.jpg" class="card-img-top" alt="Auction Item">
+                                <div class="card-body d-flex flex-column">
+                                    <h5 class="card-title">Fitness Equipment</h5>
+                                    <p class="card-text">Professional grade weight set, barely used.</p>
+                                    <div class="mt-auto">
+                                        <div class="d-flex justify-content-between">
+                                            <small class="text-muted">Current Bid:</small>
+                                            <small class="fw-bold">$180</small>
+                                        </div>
+                                        <div class="d-flex justify-content-between mt-1">
+                                            <small class="text-muted">Time Left:</small>
+                                            <small class="fw-bold text-danger">12h 10m</small>
+                                        </div>
+                                        <a href="shop-single.html" class="btn btn-success w-100 mt-2">Place Bid</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Auction Item 5 -->
+                        <div class="auction-item me-4 flex-shrink-0" style="width: 250px;">
+                            <div class="card h-100">
+                                <img src="./assets/img/feature_prod_02.jpg" class="card-img-top" alt="Auction Item">
+                                <div class="card-body d-flex flex-column">
+                                    <h5 class="card-title">Smartphone</h5>
+                                    <p class="card-text">Latest model smartphone, unlocked, like new.</p>
+                                    <div class="mt-auto">
+                                        <div class="d-flex justify-content-between">
+                                            <small class="text-muted">Current Bid:</small>
+                                            <small class="fw-bold">$650</small>
+                                        </div>
+                                        <div class="d-flex justify-content-between mt-1">
+                                            <small class="text-muted">Time Left:</small>
+                                            <small class="fw-bold text-danger">18h 25m</small>
+                                        </div>
+                                        <a href="shop-single.html" class="btn btn-success w-100 mt-2">Place Bid</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Auction Item 6 -->
+                        <div class="auction-item me-4 flex-shrink-0" style="width: 250px;">
+                            <div class="card h-100">
+                                <img src="./assets/img/feature_prod_03.jpg" class="card-img-top" alt="Auction Item">
+                                <div class="card-body d-flex flex-column">
+                                    <h5 class="card-title">Designer Bag</h5>
+                                    <p class="card-text">Authentic designer handbag with certificate.</p>
+                                    <div class="mt-auto">
+                                        <div class="d-flex justify-content-between">
+                                            <small class="text-muted">Current Bid:</small>
+                                            <small class="fw-bold">$420</small>
+                                        </div>
+                                        <div class="d-flex justify-content-between mt-1">
+                                            <small class="text-muted">Time Left:</small>
+                                            <small class="fw-bold text-danger">1d 2h</small>
+                                        </div>
+                                        <a href="shop-single.html" class="btn btn-success w-100 mt-2">Place Bid</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Auction Item 7 -->
+                        <div class="auction-item me-4 flex-shrink-0" style="width: 250px;">
+                            <div class="card h-100">
+                                <img src="./assets/img/banner_img_01.jpg" class="card-img-top" alt="Auction Item">
+                                <div class="card-body d-flex flex-column">
+                                    <h5 class="card-title">Artwork</h5>
+                                    <p class="card-text">Original painting by emerging artist.</p>
+                                    <div class="mt-auto">
+                                        <div class="d-flex justify-content-between">
+                                            <small class="text-muted">Current Bid:</small>
+                                            <small class="fw-bold">$280</small>
+                                        </div>
+                                        <div class="d-flex justify-content-between mt-1">
+                                            <small class="text-muted">Time Left:</small>
+                                            <small class="fw-bold text-danger">1d 8h</small>
+                                        </div>
+                                        <a href="shop-single.html" class="btn btn-success w-100 mt-2">Place Bid</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Auction Item 8 -->
+                        <div class="auction-item me-4 flex-shrink-0" style="width: 250px;">
+                            <div class="card h-100">
+                                <img src="./assets/img/banner_img_02.jpg" class="card-img-top" alt="Auction Item">
+                                <div class="card-body d-flex flex-column">
+                                    <h5 class="card-title">Jewelry Set</h5>
+                                    <p class="card-text">Diamond earrings and necklace set.</p>
+                                    <div class="mt-auto">
+                                        <div class="d-flex justify-content-between">
+                                            <small class="text-muted">Current Bid:</small>
+                                            <small class="fw-bold">$1,200</small>
+                                        </div>
+                                        <div class="d-flex justify-content-between mt-1">
+                                            <small class="text-muted">Time Left:</small>
+                                            <small class="fw-bold text-danger">1d 14h</small>
+                                        </div>
+                                        <a href="shop-single.html" class="btn btn-success w-100 mt-2">Place Bid</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Auction Item 9 -->
+                        <div class="auction-item me-4 flex-shrink-0" style="width: 250px;">
+                            <div class="card h-100">
+                                <img src="./assets/img/banner_img_03.jpg" class="card-img-top" alt="Auction Item">
+                                <div class="card-body d-flex flex-column">
+                                    <h5 class="card-title">Electronics Bundle</h5>
+                                    <p class="card-text">High-end TV, sound system, and accessories.</p>
+                                    <div class="mt-auto">
+                                        <div class="d-flex justify-content-between">
+                                            <small class="text-muted">Current Bid:</small>
+                                            <small class="fw-bold">$890</small>
+                                        </div>
+                                        <div class="d-flex justify-content-between mt-1">
+                                            <small class="text-muted">Time Left:</small>
+                                            <small class="fw-bold text-danger">2d 3h</small>
+                                        </div>
+                                        <a href="shop-single.html" class="btn btn-success w-100 mt-2">Place Bid</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Auction Item 10 -->
+                        <div class="auction-item me-4 flex-shrink-0" style="width: 250px;">
+                            <div class="card h-100">
+                                <img src="./assets/img/category_img_01.jpg" class="card-img-top" alt="Auction Item">
+                                <div class="card-body d-flex flex-column">
+                                    <h5 class="card-title">Collectible Coins</h5>
+                                    <p class="card-text">Rare coin collection, authenticated and appraised.</p>
+                                    <div class="mt-auto">
+                                        <div class="d-flex justify-content-between">
+                                            <small class="text-muted">Current Bid:</small>
+                                            <small class="fw-bold">$650</small>
+                                        </div>
+                                        <div class="d-flex justify-content-between mt-1">
+                                            <small class="text-muted">Time Left:</small>
+                                            <small class="fw-bold text-danger">2d 9h</small>
+                                        </div>
+                                        <a href="shop-single.html" class="btn btn-success w-100 mt-2">Place Bid</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev bg-white border rounded-circle shadow position-absolute top-50 start-0 translate-middle-y ms-2" type="button" onclick="scrollAuctions(-300)">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next bg-white border rounded-circle shadow position-absolute top-50 end-0 translate-middle-y me-2" type="button" onclick="scrollAuctions(300)">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
             </div>
         </div>
     </section>
-    <!-- End Categories of The Month -->
-
+    <!-- End Closing Auctions -->
 
     <!-- Start Featured Product -->
-    <section class="bg-light">
+    <!-- <section class="bg-light">
         <div class="container py-5">
             <div class="row text-center py-3">
                 <div class="col-lg-6 m-auto">
@@ -321,9 +641,201 @@ https://templatemo.com/tm-559-zay-shop
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
     <!-- End Featured Product -->
 
+    <!-- Start Brands Section -->
+    <section class="bg-light">
+        <div class="container py-5">
+            <div class="row text-center py-3">
+                <div class="col-lg-6 m-auto">
+                    <h1 class="h1">Authentic Brands</h1>
+                    <p>
+                        All our branded items are verified with Entrupy authentication technology
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <!-- First Row -->
+                <div class="row mb-4">
+                    <!-- Brand 1 -->
+                    <div class="col-12 col-md-3 mb-4">
+                        <div class="brand-item text-center h-100">
+                            <div class="p-4 rounded h-100 d-flex align-items-center justify-content-center">
+                                <img src="./assets/img/brand_01.png" class="img-fluid" alt="Adidas" style="max-height: 80px;">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Brand 2 -->
+                    <div class="col-12 col-md-3 mb-4">
+                        <div class="brand-item text-center h-100">
+                            <div class="p-4 rounded h-100 d-flex align-items-center justify-content-center">
+                                <img src="./assets/img/brand_02.png" class="img-fluid" alt="Nike" style="max-height: 80px;">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Brand 3 -->
+                    <div class="col-12 col-md-3 mb-4">
+                        <div class="brand-item text-center h-100">
+                            <div class="p-4 rounded h-100 d-flex align-items-center justify-content-center">
+                                <img src="./assets/img/brand_03.png" class="img-fluid" alt="Chanel" style="max-height: 80px;">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Brand 4 -->
+                    <div class="col-12 col-md-3 mb-4">
+                        <div class="brand-item text-center h-100">
+                            <div class="p-4 rounded h-100 d-flex align-items-center justify-content-center">
+                                <img src="./assets/img/brand_04.png" class="img-fluid" alt="Louis Vuitton" style="max-height: 80px;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Second Row -->
+                <!-- <div class="row">
+                    <div class="col-12 col-md-3 mb-4">
+                        <div class="brand-item text-center h-100">
+                            <div class="bg-white p-4 rounded shadow-sm h-100 d-flex align-items-center justify-content-center">
+                                <img src="./assets/img/brand_05.png" class="img-fluid" alt="Gucci" style="max-height: 80px;">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-12 col-md-3 mb-4">
+                        <div class="brand-item text-center h-100">
+                            <div class="bg-white p-4 rounded shadow-sm h-100 d-flex align-items-center justify-content-center">
+                                <img src="./assets/img/brand-6.jpg" class="img-fluid" alt="Dior" style="max-height: 80px;">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-12 col-md-3 mb-4">
+                        <div class="brand-item text-center h-100">
+                            <div class="bg-white p-4 rounded shadow-sm h-100 d-flex align-items-center justify-content-center">
+                                <img src="./assets/img/brand-7.jpg" class="img-fluid" alt="Prada" style="max-height: 80px;">
+                            </div>
+                        </div>
+                    </div>
+                    
+            
+                    <div class="col-12 col-md-3 mb-4">
+                        <div class="brand-item text-center h-100">
+                            <div class="bg-white p-4 rounded shadow-sm h-100 d-flex align-items-center justify-content-center">
+                                <img src="./assets/img/brand-8.jpg" class="img-fluid" alt="Burberry" style="max-height: 80px;">
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </section>
+    <!-- End Brands Section -->
+
+    <!-- Start You Might Also Like -->
+    <section class="container py-5">
+        <div class="row text-center py-3">
+            <div class="col-lg-6 m-auto">
+                <h2 class="h2">You might also like</h2>
+                <p>
+                    Explore more authentic products from your favorite brands
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Product 1 -->
+            <div class="col-12 col-md-6 col-lg-3 mb-4">
+                <div class="card h-100">
+                    <img src="./assets/img/feature_prod_01.jpg" class="card-img-top" alt="Adidas Sneakers">
+                    <div class="card-body d-flex flex-column">
+                        <span class="text-muted small">Adidas</span>
+                        <h5 class="card-title">UltraBoost Running Shoes</h5>
+                        <p class="card-text">Experience unmatched comfort with these Adidas UltraBoost sneakers.</p>
+                        <div class="mt-auto">
+                            <div class="d-flex justify-content-between">
+                                <span class="fw-bold text-success">Current Bid: $180</span>
+                            </div>
+                            <div class="d-flex justify-content-between mt-1">
+                                <small class="text-muted">Time Left:</small>
+                                <small class="fw-bold text-danger">2h 15m</small>
+                            </div>
+                            <a href="shop-single.html" class="btn btn-success w-100 mt-2">Place Bid</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Product 2 -->
+            <div class="col-12 col-md-6 col-lg-3 mb-4">
+                <div class="card h-100">
+                    <img src="./assets/img/feature_prod_02.jpg" class="card-img-top" alt="Louis Vuitton Handbag">
+                    <div class="card-body d-flex flex-column">
+                        <span class="text-muted small">Louis Vuitton</span>
+                        <h5 class="card-title">Designer Handbag</h5>
+                        <p class="card-text">Authentic Louis Vuitton handbag with certificate of authenticity.</p>
+                        <div class="mt-auto">
+                            <div class="d-flex justify-content-between">
+                                <span class="fw-bold text-success">Current Bid: $850</span>
+                            </div>
+                            <div class="d-flex justify-content-between mt-1">
+                                <small class="text-muted">Time Left:</small>
+                                <small class="fw-bold text-danger">5h 30m</small>
+                            </div>
+                            <a href="shop-single.html" class="btn btn-success w-100 mt-2">Place Bid</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Product 3 -->
+            <div class="col-12 col-md-6 col-lg-3 mb-4">
+                <div class="card h-100">
+                    <img src="./assets/img/feature_prod_03.jpg" class="card-img-top" alt="Nike Hoodie">
+                    <div class="card-body d-flex flex-column">
+                        <span class="text-muted small">Nike</span>
+                        <h5 class="card-title">Sportswear Hoodie</h5>
+                        <p class="card-text">Limited edition Nike hoodie, never worn, original tags attached.</p>
+                        <div class="mt-auto">
+                            <div class="d-flex justify-content-between">
+                                <span class="fw-bold text-success">Current Bid: $120</span>
+                            </div>
+                            <div class="d-flex justify-content-between mt-1">
+                                <small class="text-muted">Time Left:</small>
+                                <small class="fw-bold text-danger">12h 45m</small>
+                            </div>
+                            <a href="shop-single.html" class="btn btn-success w-100 mt-2">Place Bid</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Product 4 -->
+            <div class="col-12 col-md-6 col-lg-3 mb-4">
+                <div class="card h-100">
+                    <img src="./assets/img/category_img_01.jpg" class="card-img-top" alt="Gucci Watch">
+                    <div class="card-body d-flex flex-column">
+                        <span class="text-muted small">Gucci</span>
+                        <h5 class="card-title">Luxury Watch</h5>
+                        <p class="card-text">Gucci automatic watch with original box and papers included.</p>
+                        <div class="mt-auto">
+                            <div class="d-flex justify-content-between">
+                                <span class="fw-bold text-success">Current Bid: $620</span>
+                            </div>
+                            <div class="d-flex justify-content-between mt-1">
+                                <small class="text-muted">Time Left:</small>
+                                <small class="fw-bold text-danger">1d 3h</small>
+                            </div>
+                            <a href="shop-single.html" class="btn btn-success w-100 mt-2">Place Bid</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End You Might Also Like -->
 
     <!-- Start Footer -->
     <footer class="bg-dark" id="tempaltemo_footer">
@@ -409,8 +921,8 @@ https://templatemo.com/tm-559-zay-shop
                 <div class="row pt-2">
                     <div class="col-12">
                         <p class="text-left text-light">
-                            Copyright &copy; 2021 Company Name 
-                            | Designed by <a rel="sponsored" href="https://templatemo.com" target="_blank">TemplateMo</a>
+                            Copyright &copy; 2025 SnapBid
+                            
                         </p>
                     </div>
                 </div>
@@ -426,6 +938,125 @@ https://templatemo.com/tm-559-zay-shop
     <script src="assets/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/templatemo.js"></script>
     <script src="assets/js/custom.js"></script>
+    <script>
+        // Check if user is logged in as a seller
+        document.addEventListener('DOMContentLoaded', function() {
+            const userRole = localStorage.getItem('userRole');
+            const username = localStorage.getItem('username');
+            
+            if (userRole === 'seller' && username) {
+                // Hide default user icon
+                document.getElementById('defaultUserIcon').style.display = 'none';
+                // Show seller dropdown
+                document.getElementById('sellerDropdown').style.display = 'block';
+            } else if (userRole === 'customer' && username) {
+                // Hide default user icon
+                document.getElementById('defaultUserIcon').style.display = 'none';
+                // Show customer dropdown
+                document.getElementById('customerDropdown').style.display = 'block';
+            }
+            
+            // Initialize countdown timers for hero carousel
+            initializeHeroCountdowns();
+            
+            // Initialize countdown timers for featured products
+            initializeCountdowns();
+        });
+        
+        function logout() {
+            localStorage.removeItem('userRole');
+            localStorage.removeItem('username');
+            window.location.href = 'index.html';
+        }
+        
+        // Function to scroll the auctions horizontally
+        function scrollAuctions(scrollAmount) {
+            const container = document.getElementById('auctionsContainer');
+            container.scrollBy({
+                left: scrollAmount,
+                behavior: 'smooth'
+            });
+        }
+        
+        // Function to initialize countdown timers for hero carousel
+        function initializeHeroCountdowns() {
+            // Initial countdown times in seconds for each product in hero carousel
+            const heroCountdownTimes = [
+                1*24*60*60 + 2*60*60 + 30*60 + 15,  // 1d 2h 30m 15s
+                0*24*60*60 + 12*60*60 + 45*60 + 30, // 0d 12h 45m 30s
+                2*24*60*60 + 8*60*60 + 15*60 + 0,   // 2d 8h 15m 0s
+                1*24*60*60 + 5*60*60 + 20*60 + 45,  // 1d 5h 20m 45s
+                3*24*60*60 + 14*60*60 + 10*60 + 30  // 3d 14h 10m 30s
+            ];
+            
+            // Update countdowns every second
+            setInterval(function() {
+                for (let i = 0; i < heroCountdownTimes.length; i++) {
+                    const elementId = 'countdown-' + (i + 1);
+                    const element = document.getElementById(elementId);
+                    
+                    if (element && heroCountdownTimes[i] > 0) {
+                        heroCountdownTimes[i]--;
+                        
+                        // Convert seconds to days, hours, minutes, seconds
+                        const days = Math.floor(heroCountdownTimes[i] / (24 * 60 * 60));
+                        const hours = Math.floor((heroCountdownTimes[i] % (24 * 60 * 60)) / (60 * 60));
+                        const minutes = Math.floor((heroCountdownTimes[i] % (60 * 60)) / 60);
+                        const seconds = heroCountdownTimes[i] % 60;
+                        
+                        // Format time string
+                        if (days > 0) {
+                            element.textContent = `${days} ngày ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                        } else {
+                            element.textContent = `0 ngày ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                        }
+                    }
+                }
+            }, 1000);
+        }
+        
+        // Function to initialize countdown timers for featured products
+        function initializeCountdowns() {
+            // Sample countdown times (in seconds) for each product
+            const countdownTimes = [
+                2*60*60 + 15*60 + 30,  // 2h 15m 30s
+                4*60*60 + 30*60 + 15,  // 4h 30m 15s
+                6*60*60 + 45*60 + 45,  // 6h 45m 45s
+                12*60*60 + 10*60 + 20, // 12h 10m 20s
+                18*60*60 + 25*60 + 10, // 18h 25m 10s
+                24*60*60 + 2*60*60 + 30, // 1d 2h 30s
+                24*60*60 + 8*60*60 + 15*60 + 25, // 1d 8h 15m 25s
+                24*60*60 + 14*60*60 + 30*60 + 45, // 1d 14h 30m 45s
+                2*24*60*60 + 3*60*60 + 20*60 + 10, // 2d 3h 20m 10s
+                2*24*60*60 + 9*60*60 + 45*60 + 35  // 2d 9h 45m 35s
+            ];
+            
+            // Update countdowns every second
+            setInterval(function() {
+                for (let i = 0; i < countdownTimes.length; i++) {
+                    const elementId = 'countdown' + (i + 1);
+                    const element = document.getElementById(elementId);
+                    
+                    if (element && countdownTimes[i] > 0) {
+                        countdownTimes[i]--;
+                        
+                        // Convert seconds to days, hours, minutes, seconds
+                        const days = Math.floor(countdownTimes[i] / (24 * 60 * 60));
+                        const hours = Math.floor((countdownTimes[i] % (24 * 60 * 60)) / (60 * 60));
+                        const minutes = Math.floor((countdownTimes[i] % (60 * 60)) / 60);
+                        const seconds = countdownTimes[i] % 60;
+                        
+                        // Format time string
+                        if (days > 0) {
+                            element.textContent = `${days}d ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                        } else {
+                            element.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                        }
+                    }
+                }
+            }, 1000);
+        }
+    </script>
     <!-- End Script -->
 </body>
 

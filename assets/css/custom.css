@@ -1,3 +1,94 @@
-/*
-Custom Css
-*/
+/* Custom styles for the auctions carousel */
+.auctions-container {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+}
+
+.auctions-container::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+}
+
+.auctions-carousel {
+    position: relative;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    width: 40px;
+    height: 40px;
+    z-index: 10;
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+    background-color: #f8f9fa !important;
+}
+
+.auction-item .card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.auction-item .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+/* Featured Products section */
+#featured-products .card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Brands section */
+.brand-item {
+    transition: transform 0.3s ease;
+}
+
+.brand-item:hover {
+    transform: scale(1.05);
+}
+
+.brand-item .bg-white {
+    transition: all 0.3s ease;
+}
+
+.brand-item:hover .bg-white {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1) !important;
+}
+
+.brand-item img {
+    max-width: 100%;
+    height: auto;
+    filter: grayscale(100%);
+    opacity: 0.7;
+    transition: all 0.3s ease;
+}
+
+.brand-item:hover img {
+    filter: grayscale(0%);
+    opacity: 1;
+}
+
+/* Ensure consistent height for brand items */
+.row .col-md-3 {
+    display: flex;
+}
+
+/* You Might Also Like section */
+.card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
