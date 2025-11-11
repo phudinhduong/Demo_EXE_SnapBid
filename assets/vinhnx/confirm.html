@@ -1,0 +1,819 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="vi">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>Demo Quy Trình Ký Quỹ Đấu Giá Hoàn Chỉnh</title>-->
+<!--    &lt;!&ndash; Tải Tailwind CSS CDN (Đảm bảo giao diện không bị vỡ) &ndash;&gt;-->
+<!--    <script src="https://cdn.tailwindcss.com"></script>-->
+<!--    <script>-->
+<!--        // Cấu hình Tailwind-->
+<!--        tailwind.config = {-->
+<!--            theme: {-->
+<!--                extend: {-->
+<!--                    colors: {-->
+<!--                        primary: '#0D9488',-->
+<!--                        secondary: '#F59E0B',-->
+<!--                        background: '#F9FAFB',-->
+<!--                    },-->
+<!--                    fontFamily: {-->
+<!--                        sans: ['Inter', 'sans-serif'],-->
+<!--                    }-->
+<!--                }-->
+<!--            }-->
+<!--        }-->
+<!--    </script>-->
+<!--    <style>-->
+<!--        /* Đảm bảo toàn bộ body dùng font Inter */-->
+<!--        body { font-family: 'Inter', sans-serif; background-color: #F9FAFB; }-->
+
+<!--        /* Ẩn các trang (View) ban đầu */-->
+<!--        .page-view { display: none; }-->
+
+<!--        /* Custom shadow nhẹ nhàng hơn */-->
+<!--        .custom-shadow { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06); }-->
+<!--    </style>-->
+<!--</head>-->
+
+<!--<body class="min-h-screen">-->
+
+<!--&lt;!&ndash; Navbar/Header Đơn Giản &ndash;&gt;-->
+<!--<header class="bg-white shadow-md">-->
+<!--    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center">-->
+<!--        <a href="#" class="text-2xl font-bold text-primary">Zay Auction Demo</a>-->
+<!--        <nav>-->
+<!--            <button onclick="resetDemo()" class="text-sm text-gray-500 hover:text-red-500 transition duration-150">-->
+<!--                <svg class="w-4 h-4 inline-block align-text-bottom mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0l-2.583 3.55 2.583 3.55m15.356-7l2.583 3.55-2.583 3.55m-7.408 2H20"></path></svg>-->
+<!--                Reset Demo-->
+<!--            </button>-->
+<!--        </nav>-->
+<!--    </div>-->
+<!--</header>-->
+
+<!--<main class="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8">-->
+
+<!--    &lt;!&ndash; 1. MÀN HÌNH XÁC NHẬN ĐƠN HÀNG (CONFIRM) &ndash;&gt;-->
+<!--    <div id="confirm-view" class="page-view">-->
+<!--        <h1 class="text-3xl font-bold text-center text-gray-800 mb-8">Xác Nhận Đơn Hàng & Nộp Ký Quỹ</h1>-->
+<!--        <div class="md:flex gap-6">-->
+<!--            &lt;!&ndash; Chi tiết Sản phẩm &ndash;&gt;-->
+<!--            <div class="md:w-7/12 mb-6 md:mb-0">-->
+<!--                <div class="bg-white p-6 rounded-xl custom-shadow">-->
+<!--                    <h2 class="text-xl font-semibold border-b pb-2 mb-4 text-primary">Thông tin Sản phẩm</h2>-->
+<!--                    <div class="flex items-center space-x-4 mb-4">-->
+<!--                        <img id="product-img" src="https://placehold.co/100x100/38bdf8/ffffff?text=Product" class="w-20 h-20 object-cover rounded-lg" alt="Sản phẩm">-->
+<!--                        <div>-->
+<!--                            <h3 id="product-name" class="text-lg font-bold">Tên Sản Phẩm</h3>-->
+<!--                            <p class="text-sm text-gray-500">Mã hàng: <span id="product-id"></span></p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+<!--                    <div class="bg-gray-50 p-4 rounded-lg">-->
+<!--                        <h4 class="font-semibold text-gray-700 mb-2">Tóm tắt Thanh toán</h4>-->
+<!--                        <ul class="space-y-1 text-sm text-gray-600">-->
+<!--                            <li>Giá thắng/mua: <span class="float-right font-medium text-gray-800" id="confirm-final-price"></span></li>-->
+<!--                            <li>Phí dịch vụ (4%): <span class="float-right font-medium text-gray-800" id="confirm-service-fee"></span></li>-->
+<!--                            <li class="pt-2 border-t mt-2 font-bold text-base text-gray-900">-->
+<!--                                Tổng Giá trị Đơn hàng: <span class="float-right text-primary" id="confirm-total-value"></span>-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            &lt;!&ndash; Chi tiết Ký Quỹ và Hành động &ndash;&gt;-->
+<!--            <div class="md:w-5/12">-->
+<!--                <div class="bg-white p-6 rounded-xl custom-shadow border-2 border-secondary">-->
+<!--                    <h2 class="text-xl font-semibold border-b pb-2 mb-4 text-secondary">Yêu cầu Ký Quỹ Bắt Buộc</h2>-->
+<!--                    <div class="text-center mb-4">-->
+<!--                        <p class="text-sm text-gray-600">Tỷ lệ Ký quỹ:</p>-->
+<!--                        <span class="text-5xl font-extrabold text-secondary" id="escrow-rate">10%</span>-->
+<!--                    </div>-->
+<!--                    <p class="text-sm text-gray-600 text-center">Số tiền Ký quỹ cần nộp:</p>-->
+<!--                    <h1 class="text-3xl font-extrabold text-primary text-center mb-6" id="escrow-amount"></h1>-->
+
+<!--                    <div class="flex items-start mb-6">-->
+<!--                        <input class="w-4 h-4 text-primary bg-gray-100 border-gray-300 rounded focus:ring-primary mt-1" type="checkbox" id="agreement-check">-->
+<!--                        <label class="ml-2 text-xs text-gray-600 cursor-pointer" for="agreement-check">-->
+<!--                            Tôi đã đọc và đồng ý với các **Điều khoản Ký Quỹ** và cam kết thanh toán đủ phần còn lại.-->
+<!--                        </label>-->
+<!--                    </div>-->
+
+<!--                    <button id="confirm-btn" class="w-full bg-primary hover:bg-teal-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 disabled:opacity-50" disabled>-->
+<!--                        Tiến hành Nộp tiền Ký Quỹ-->
+<!--                    </button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; 2. MÀN HÌNH THANH TOÁN KÝ QUỸ (PAYMENT) &ndash;&gt;-->
+<!--    <div id="payment-view" class="page-view">-->
+<!--        <h1 class="text-3xl font-bold text-center text-gray-800 mb-8">Bước 2: Nộp Tiền Ký Quỹ (Mô Phỏng)</h1>-->
+<!--        <div class="max-w-xl mx-auto bg-white p-8 rounded-xl custom-shadow">-->
+<!--            <h2 class="text-2xl font-bold mb-4 text-primary">Số tiền cần nộp:</h2>-->
+<!--            <h3 class="text-4xl font-extrabold text-red-600 mb-6" id="payment-amount"></h3>-->
+<!--            <p class="text-gray-500 mb-6">Cho đơn hàng: <span class="font-semibold text-gray-700" id="payment-order-id"></span></p>-->
+<!--            <hr class="mb-6">-->
+
+<!--            <h4 class="text-xl font-semibold mb-4">Phương thức: Chuyển khoản Ngân hàng</h4>-->
+<!--            <div class="bg-yellow-100 border-l-4 border-secondary text-secondary p-4 rounded-lg mb-6" role="alert">-->
+<!--                <p class="font-bold">Lưu ý Demo:</p>-->
+<!--                <p class="text-sm">Sau khi nhấn nút xác nhận, hệ thống sẽ xử lý giao dịch trong 3 giây.</p>-->
+<!--            </div>-->
+
+<!--            <ul class="space-y-3 bg-gray-50 p-4 rounded-lg mb-8">-->
+<!--                <li class="flex justify-between border-b pb-2"><strong>Ngân hàng:</strong> <span>ZayBank - Chi nhánh HN</span></li>-->
+<!--                <li class="flex justify-between border-b pb-2"><strong>Số tài khoản:</strong> <span class="font-mono text-lg text-gray-800 font-bold">123 456 789 000</span></li>-->
+<!--                <li class="flex justify-between">-->
+<!--                    <strong>Nội dung chuyển khoản:</strong>-->
+<!--                    <span class="text-primary font-extrabold text-xl" id="payment-transfer-content"></span>-->
+<!--                </li>-->
+<!--            </ul>-->
+
+<!--            <button id="pay-btn" class="w-full bg-secondary hover:bg-yellow-600 text-white font-bold py-4 rounded-lg transition duration-300">-->
+<!--                Xác nhận Đã Hoàn tất Chuyển khoản-->
+<!--            </button>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; 3. MÀN HÌNH LỊCH SỬ ĐƠN HÀNG (HISTORY) &ndash;&gt;-->
+<!--    <div id="history-view" class="page-view">-->
+<!--        <h1 class="text-3xl font-bold text-center text-gray-800 mb-8">Lịch Sử Đặt Hàng & Đấu Giá</h1>-->
+<!--        <div id="order-list" class="space-y-6">-->
+<!--            &lt;!&ndash; Order Card sẽ được render tại đây &ndash;&gt;-->
+<!--            <p class="text-center text-gray-500 py-10">Đang tải lịch sử đơn hàng...</p>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--</main>-->
+
+<!--&lt;!&ndash; Footer Đơn Giản &ndash;&gt;-->
+<!--<footer class="bg-gray-100 mt-10 py-4">-->
+<!--    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm text-gray-500">-->
+<!--        &copy; 2024 Zay Auction Demo. All rights reserved.-->
+<!--    </div>-->
+<!--</footer>-->
+
+<!--<script>-->
+<!--    const orderKey = 'currentDemoOrder';-->
+<!--    const confirmView = document.getElementById('confirm-view');-->
+<!--    const paymentView = document.getElementById('payment-view');-->
+<!--    const historyView = document.getElementById('history-view');-->
+<!--    // const loadingOverlay = document.getElementById('loading-overlay'); // KHÔNG CÒN DÙNG-->
+
+<!--    // Dữ liệu mô phỏng đơn hàng (Mock Data)-->
+<!--    const mockOrder = {-->
+<!--        orderId: "A38-BID-20251111",-->
+<!--        productName: "Đồng Hồ Cổ Thụy Sĩ - Phiên Bản Giới Hạn",-->
+<!--        productImg: "https://placehold.co/100x100/38bdf8/ffffff?text=Watch", // Placeholder image-->
+<!--        finalPrice: 50000000, // 50,000,000 VND-->
+<!--        serviceRate: 0.04,-->
+<!--        serviceFee: 0,-->
+<!--        totalValue: 0,-->
+<!--        escrowRate: 0.1, // Tỷ lệ ký quỹ 10%-->
+<!--        escrowAmount: 0,-->
+<!--        currentStatus: "AWAITING_ESCROW", // Trạng thái ban đầu: CHỜ KÝ QUỸ-->
+<!--        escrowPayment: {-->
+<!--            isPaid: false,-->
+<!--            paymentMethod: null,-->
+<!--            paidDate: null-->
+<!--        }-->
+<!--    };-->
+
+<!--    // Hàm định dạng số tiền VND-->
+<!--    function formatVND(amount) {-->
+<!--        return Math.round(amount).toLocaleString('vi-VN') + ' VND';-->
+<!--    }-->
+
+<!--    // -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+<!--    // LOGIC CHUNG: Khởi tạo, Render Trang, và Reset-->
+<!--    // -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+
+<!--    function initializeOrder() {-->
+<!--        let order = localStorage.getItem(orderKey);-->
+<!--        if (!order) {-->
+<!--            // Tính toán các giá trị lần đầu tiên-->
+<!--            mockOrder.serviceFee = mockOrder.finalPrice * mockOrder.serviceRate;-->
+<!--            mockOrder.totalValue = mockOrder.finalPrice + mockOrder.serviceFee;-->
+<!--            mockOrder.escrowAmount = mockOrder.totalValue * mockOrder.escrowRate;-->
+
+<!--            localStorage.setItem(orderKey, JSON.stringify(mockOrder));-->
+<!--            return mockOrder;-->
+<!--        }-->
+<!--        return JSON.parse(order);-->
+<!--    }-->
+
+<!--    function resetDemo() {-->
+<!--        localStorage.removeItem(orderKey);-->
+<!--        // Loại bỏ alert() để tránh gián đoạn-->
+<!--        console.log('Demo đã được Reset. Tải lại trang.');-->
+<!--        window.location.reload();-->
+<!--    }-->
+
+<!--    // Chuyển đổi giữa các View-->
+<!--    function switchView(viewId) {-->
+<!--        [confirmView, paymentView, historyView].forEach(view => {-->
+<!--            view.style.display = 'none';-->
+<!--        });-->
+<!--        document.getElementById(viewId).style.display = 'block';-->
+<!--    }-->
+
+<!--    // -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+<!--    // 1. LOGIC cho trang CONFIRM.HTML-->
+<!--    // -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+<!--    function renderConfirmView() {-->
+<!--        const currentOrder = initializeOrder();-->
+<!--        if (currentOrder.currentStatus !== 'AWAITING_ESCROW') {-->
+<!--            // Nếu đã thanh toán, chuyển thẳng sang Lịch sử-->
+<!--            return renderHistoryView();-->
+<!--        }-->
+
+<!--        // Hiển thị dữ liệu lên giao diện-->
+<!--        document.getElementById('product-name').innerText = currentOrder.productName;-->
+<!--        document.getElementById('product-img').src = currentOrder.productImg;-->
+<!--        document.getElementById('product-id').innerText = currentOrder.orderId;-->
+
+<!--        document.getElementById('confirm-final-price').innerText = formatVND(currentOrder.finalPrice);-->
+<!--        document.getElementById('confirm-service-fee').innerText = formatVND(currentOrder.serviceFee);-->
+<!--        document.getElementById('confirm-total-value').innerText = formatVND(currentOrder.totalValue);-->
+
+<!--        document.getElementById('escrow-rate').innerText = `${currentOrder.escrowRate * 100}%`;-->
+<!--        document.getElementById('escrow-amount').innerText = formatVND(currentOrder.escrowAmount);-->
+
+<!--        const confirmBtn = document.getElementById('confirm-btn');-->
+<!--        const agreementCheck = document.getElementById('agreement-check');-->
+
+<!--        // Kích hoạt nút khi đồng ý điều khoản-->
+<!--        agreementCheck.addEventListener('change', () => {-->
+<!--            confirmBtn.disabled = !agreementCheck.checked;-->
+<!--        });-->
+
+<!--        // Chuyển sang trang thanh toán-->
+<!--        confirmBtn.onclick = () => {-->
+<!--            if (agreementCheck.checked) {-->
+<!--                switchView('payment-view');-->
+<!--                renderPaymentView();-->
+<!--            }-->
+<!--        };-->
+
+<!--        switchView('confirm-view');-->
+<!--    }-->
+
+<!--    // -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+<!--    // 2. LOGIC cho trang PAYMENT.HTML-->
+<!--    // -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+<!--    function renderPaymentView() {-->
+<!--        const currentOrder = initializeOrder();-->
+
+<!--        document.getElementById('payment-amount').innerText = formatVND(currentOrder.escrowAmount);-->
+<!--        document.getElementById('payment-order-id').innerText = currentOrder.orderId;-->
+<!--        document.getElementById('payment-transfer-content').innerText = `KYQUY_${currentOrder.orderId}`;-->
+
+<!--        const payBtn = document.getElementById('pay-btn');-->
+<!--        payBtn.innerText = 'Xác nhận Đã Hoàn tất Chuyển khoản';-->
+<!--        payBtn.disabled = false;-->
+
+
+<!--        payBtn.onclick = () => {-->
+<!--            // Vô hiệu hóa và thay đổi text nút để mô phỏng loading-->
+<!--            payBtn.disabled = true;-->
+<!--            payBtn.innerHTML = '<span class="animate-spin inline-block mr-2 border-2 border-white border-t-transparent rounded-full w-4 h-4"></span> Đang xử lý...';-->
+
+<!--            // Mô phỏng thời gian chờ 3 giây-->
+<!--            setTimeout(() => {-->
+<!--                // Cập nhật trạng thái đơn hàng (Logic cốt lõi)-->
+<!--                let updatedOrder = JSON.parse(localStorage.getItem(orderKey));-->
+
+<!--                updatedOrder.currentStatus = 'ESCROW_PAID';-->
+<!--                updatedOrder.escrowPayment.isPaid = true;-->
+<!--                updatedOrder.escrowPayment.paymentMethod = 'Bank Transfer (Mô phỏng)';-->
+<!--                updatedOrder.escrowPayment.paidDate = new Date().toLocaleString('vi-VN');-->
+
+<!--                localStorage.setItem(orderKey, JSON.stringify(updatedOrder));-->
+
+<!--                // Chuyển sang Lịch sử-->
+<!--                switchView('history-view');-->
+<!--                renderHistoryView();-->
+<!--            }, 3000);-->
+<!--        };-->
+<!--    }-->
+
+<!--    // -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+<!--    // 3. LOGIC cho trang HISTORY.HTML-->
+<!--    // -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+<!--    function renderHistoryView() {-->
+<!--        const orderListContainer = document.getElementById('order-list');-->
+<!--        const orderData = initializeOrder();-->
+
+<!--        orderListContainer.innerHTML = ''; // Clear container-->
+
+<!--        if (!orderData) {-->
+<!--            orderListContainer.innerHTML = '<p class="text-center text-red-500 font-semibold py-10">Không tìm thấy đơn hàng. Vui lòng bắt đầu lại.</p>';-->
+<!--            return;-->
+<!--        }-->
+
+<!--        let statusText = '';-->
+<!--        let statusClasses = '';-->
+<!--        let actionButton = '';-->
+
+<!--        // Xác định trạng thái và hiển thị-->
+<!--        if (orderData.currentStatus === 'ESCROW_PAID') {-->
+<!--            statusText = 'ĐÃ KÝ QUỸ THÀNH CÔNG';-->
+<!--            statusClasses = 'bg-primary text-white';-->
+<!--            actionButton = `<button class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300">-->
+<!--                                    Thanh Toán Phần Còn Lại-->
+<!--                                </button>`;-->
+<!--        } else {-->
+<!--            statusText = 'CHỜ KÝ QUỸ';-->
+<!--            statusClasses = 'bg-red-500 text-white';-->
+<!--            actionButton = `<button onclick="switchView('confirm-view')" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300">-->
+<!--                                    Tiếp tục Ký Quỹ-->
+<!--                                </button>`;-->
+<!--        }-->
+
+<!--        const remainingAmount = orderData.totalValue - orderData.escrowAmount;-->
+
+<!--        // Tạo Card đơn hàng với trạng thái mới-->
+<!--        const cardHtml = `-->
+<!--                <div class="bg-white p-6 rounded-xl custom-shadow border-4 border-l-${orderData.currentStatus === 'ESCROW_PAID' ? 'primary' : 'red-500'}">-->
+<!--                    <div class="flex justify-between items-center mb-4">-->
+<!--                        <h5 class="text-lg font-semibold text-gray-800">Đơn hàng: **${orderData.orderId}**</h5>-->
+<!--                        <span class="px-3 py-1 text-sm font-semibold rounded-full ${statusClasses}">${statusText}</span>-->
+<!--                    </div>-->
+<!--                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 border-t pt-4">-->
+<!--                        <div class="md:col-span-1">-->
+<!--                            <img src="${orderData.productImg}" class="w-24 h-24 object-cover rounded-lg" alt="${orderData.productName}">-->
+<!--                        </div>-->
+<!--                        <div class="md:col-span-2 space-y-1">-->
+<!--                            <p class="font-bold text-gray-900">${orderData.productName}</p>-->
+<!--                            <p class="text-sm text-gray-600">Ngày ký quỹ: ${orderData.escrowPayment.paidDate || 'Chưa hoàn tất'}</p>-->
+<!--                            <p class="text-sm">Tổng giá trị: <strong class="text-gray-800">${formatVND(orderData.totalValue)}</strong></p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+<!--                    <div class="mt-4 pt-4 border-t flex justify-between items-center">-->
+<!--                        <div>-->
+<!--                            <p class="text-sm">Đã nộp Ký quỹ: <strong class="text-primary">${formatVND(orderData.escrowAmount)}</strong></p>-->
+<!--                            <p class="text-lg font-bold">Còn lại: <strong class="text-red-600">${formatVND(remainingAmount)}</strong></p>-->
+<!--                        </div>-->
+<!--                        ${actionButton}-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            `;-->
+<!--        orderListContainer.innerHTML = cardHtml;-->
+<!--    }-->
+
+<!--    // -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+<!--    // Khởi động ứng dụng: Bắt đầu từ trang Xác nhận-->
+<!--    // -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+<!--    document.addEventListener('DOMContentLoaded', () => {-->
+<!--        renderConfirmView();-->
+<!--    });-->
+
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Quy Trình Ký Quỹ Đấu Giá Hoàn Chỉnh</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Cấu hình Tailwind
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0D9488',
+                        secondary: '#F59E0B',
+                        background: '#F9FAFB',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Đảm bảo toàn bộ body dùng font Inter */
+        body { font-family: 'Inter', sans-serif; background-color: #F9FAFB; }
+
+        /* Ẩn các trang (View) ban đầu */
+        .page-view { display: none; }
+
+        /* Custom shadow nhẹ nhàng hơn */
+        .custom-shadow { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06); }
+
+        /* Thêm style cho modal khi hiển thị (JS sẽ đổi display) */
+        #terms-modal {
+            display: none; /* Ẩn ban đầu */
+        }
+    </style>
+</head>
+
+<body class="min-h-screen">
+
+<header class="bg-white shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center">
+        <a href="#" class="text-2xl font-bold text-primary">Zay Auction Demo</a>
+        <nav>
+            <button onclick="resetDemo()" class="text-sm text-gray-500 hover:text-red-500 transition duration-150">
+                <svg class="w-4 h-4 inline-block align-text-bottom mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0l-2.583 3.55 2.583 3.55m15.356-7l2.583 3.55-2.583 3.55m-7.408 2H20"></path></svg>
+                Reset Demo
+            </button>
+        </nav>
+    </div>
+</header>
+
+<main class="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8">
+
+    <div id="confirm-view" class="page-view">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-8">Xác Nhận Đơn Hàng & Nộp Ký Quỹ</h1>
+        <div class="md:flex gap-6">
+            <div class="md:w-7/12 mb-6 md:mb-0">
+                <div class="bg-white p-6 rounded-xl custom-shadow">
+                    <h2 class="text-xl font-semibold border-b pb-2 mb-4 text-primary">Thông tin Sản phẩm</h2>
+                    <div class="flex items-center space-x-4 mb-4">
+                        <img id="product-img" src="https://placehold.co/100x100/38bdf8/ffffff?text=Product" class="w-20 h-20 object-cover rounded-lg" alt="Sản phẩm">
+                        <div>
+                            <h3 id="product-name" class="text-lg font-bold">Tên Sản Phẩm</h3>
+                            <p class="text-sm text-gray-500">Mã hàng: <span id="product-id"></span></p>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h4 class="font-semibold text-gray-700 mb-2">Tóm tắt Thanh toán</h4>
+                        <ul class="space-y-1 text-sm text-gray-600">
+                            <li>Giá thắng/mua: <span class="float-right font-medium text-gray-800" id="confirm-final-price"></span></li>
+                            <li>Phí dịch vụ (4%): <span class="float-right font-medium text-gray-800" id="confirm-service-fee"></span></li>
+                            <li class="pt-2 border-t mt-2 font-bold text-base text-gray-900">
+                                Tổng Giá trị Đơn hàng: <span class="float-right text-primary" id="confirm-total-value"></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="md:w-5/12">
+                <div class="bg-white p-6 rounded-xl custom-shadow border-2 border-secondary">
+                    <h2 class="text-xl font-semibold border-b pb-2 mb-4 text-secondary">Yêu cầu Ký Quỹ Bắt Buộc</h2>
+                    <div class="text-center mb-4">
+                        <p class="text-sm text-gray-600">Tỷ lệ Ký quỹ:</p>
+                        <span class="text-5xl font-extrabold text-secondary" id="escrow-rate">10%</span>
+                    </div>
+                    <p class="text-sm text-gray-600 text-center">Số tiền Ký quỹ cần nộp:</p>
+                    <h1 class="text-3xl font-extrabold text-primary text-center mb-6" id="escrow-amount"></h1>
+
+                    <div class="flex items-start mb-6">
+                        <input class="w-4 h-4 text-primary bg-gray-100 border-gray-300 rounded focus:ring-primary mt-1" type="checkbox" id="agreement-check">
+
+                        <label class="ml-2 text-xs text-gray-600" for="agreement-check">
+                            Tôi đã đọc và đồng ý với các
+                            <a href="#" onclick="openTermsModal(event)" class="font-bold text-primary hover:underline cursor-pointer">
+                                Điều khoản Ký Quỹ
+                            </a>
+                            và cam kết thanh toán đủ phần còn lại.
+                        </label>
+                    </div>
+
+                    <button id="confirm-btn" class="w-full bg-primary hover:bg-teal-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 disabled:opacity-50" disabled>
+                        Tiến hành Nộp tiền Ký Quỹ
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="payment-view" class="page-view">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-8">Bước 2: Nộp Tiền Ký Quỹ (Mô Phỏng)</h1>
+        <div class="max-w-xl mx-auto bg-white p-8 rounded-xl custom-shadow">
+            <h2 class="text-2xl font-bold mb-4 text-primary">Số tiền cần nộp:</h2>
+            <h3 class="text-4xl font-extrabold text-red-600 mb-6" id="payment-amount"></h3>
+            <p class="text-gray-500 mb-6">Cho đơn hàng: <span class="font-semibold text-gray-700" id="payment-order-id"></span></p>
+            <hr class="mb-6">
+
+            <h4 class="text-xl font-semibold mb-4">Phương thức: Chuyển khoản Ngân hàng</h4>
+            <div class="bg-yellow-100 border-l-4 border-secondary text-secondary p-4 rounded-lg mb-6" role="alert">
+                <p class="font-bold">Lưu ý Demo:</p>
+                <p class="text-sm">Sau khi nhấn nút xác nhận, hệ thống sẽ xử lý giao dịch trong 3 giây.</p>
+            </div>
+
+            <ul class="space-y-3 bg-gray-50 p-4 rounded-lg mb-8">
+                <li class="flex justify-between border-b pb-2"><strong>Ngân hàng:</strong> <span>ZayBank - Chi nhánh HN</span></li>
+                <li class="flex justify-between border-b pb-2"><strong>Số tài khoản:</strong> <span class="font-mono text-lg text-gray-800 font-bold">123 456 789 000</span></li>
+                <li class="flex justify-between">
+                    <strong>Nội dung chuyển khoản:</strong>
+                    <span class="text-primary font-extrabold text-xl" id="payment-transfer-content"></span>
+                </li>
+            </ul>
+
+            <button id="pay-btn" class="w-full bg-secondary hover:bg-yellow-600 text-white font-bold py-4 rounded-lg transition duration-300">
+                Xác nhận Đã Hoàn tất Chuyển khoản
+            </button>
+        </div>
+    </div>
+
+    <div id="history-view" class="page-view">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-8">Lịch Sử Đặt Hàng & Đấu Giá</h1>
+        <div id="order-list" class="space-y-6">
+            <p class="text-center text-gray-500 py-10">Đang tải lịch sử đơn hàng...</p>
+        </div>
+    </div>
+
+</main>
+
+<div id="terms-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 p-4">
+    <div class="bg-white rounded-xl shadow-xl max-w-2xl w-full m-4 max-h-[85vh] flex flex-col custom-shadow">
+        <div class="flex justify-between items-center p-5 border-b">
+            <h2 class="text-2xl font-bold text-primary">Điều Khoản & Điều Kiện Ký Quỹ</h2>
+            <button onclick="closeTermsModal()" class="text-gray-400 hover:text-gray-700 text-3xl font-bold">&times;</button>
+        </div>
+
+        <div class="p-6 space-y-4 overflow-y-auto">
+            <p class="text-sm text-gray-600">Vui lòng đọc kỹ các điều khoản dưới đây trước khi tiến hành nộp tiền ký quỹ cho đơn hàng thắng đấu giá của bạn.</p>
+
+            <h3 class="text-lg font-semibold text-gray-800">1. Mục đích Ký quỹ</h3>
+            <p>Số tiền ký quỹ (còn gọi là tiền cọc) là một khoản thanh toán tạm thời, chiếm <strong>10% Tổng Giá trị Đơn hàng</strong> (bao gồm giá thắng và phí dịch vụ). Khoản tiền này nhằm mục đích xác nhận cam kết của bạn sẽ hoàn tất thanh toán cho sản phẩm bạn đã thắng đấu giá.</p>
+
+            <h3 class="text-lg font-semibold text-gray-800">2. Hoàn tất Thanh toán</h3>
+            <ul class="list-disc list-inside space-y-1 text-gray-700 pl-4">
+                <li>Sau khi nộp ký quỹ thành công, bạn có nghĩa vụ thanh toán <strong>toàn bộ số tiền còn lại</strong> (90% giá trị đơn hàng) trong vòng <strong>07 (bảy) ngày</strong>.</li>
+                <li>Đơn hàng chỉ được xem là hoàn tất và sản phẩm chỉ được vận chuyển sau khi chúng tôi nhận đủ 100% giá trị đơn hàng.</li>
+            </ul>
+
+            <h3 class="text-lg font-semibold text-gray-800">3. Điều khoản Hủy và Hoàn tiền</h3>
+            <div class="bg-red-50 border-l-4 border-red-400 text-red-700 p-4 rounded-md">
+                <p class="font-bold">Quan trọng: Điều khoản mất cọc</p>
+                <p class="text-sm">Nếu bạn không thanh toán đủ số tiền còn lại trong thời hạn quy định (07 ngày) vì bất kỳ lý do gì từ phía bạn, bạn sẽ được xem là vi phạm cam kết mua hàng. Trong trường hợp này:</p>
+                <ul class="list-disc list-inside pl-4 mt-2">
+                    <li>Đơn hàng sẽ tự động bị hủy.</li>
+                    <li>Sản phẩm sẽ được đưa lại vào phiên đấu giá tiếp theo.</li>
+                    <li>Toàn bộ số tiền ký quỹ (10%) của bạn sẽ <strong>KHÔNG ĐƯỢC HOÀN LẠI</strong> và được xem như phí phạt vi phạm hợp đồng.</li>
+                </ul>
+            </div>
+            <p class="text-gray-700 mt-2">
+                Tiền ký quỹ chỉ được hoàn lại 100% trong trường hợp lỗi phát sinh từ phía Zay Auction (ví dụ: sản phẩm không đúng mô tả, hệ thống lỗi không thể hoàn tất giao dịch) và đã được chúng tôi xác nhận.
+            </p>
+
+            <h3 class="text-lg font-semibold text-gray-800">4. Xác nhận</h3>
+            <p>Bằng cách nhấn nút "Tiến hành Nộp tiền Ký Quỹ", bạn xác nhận đã đọc, hiểu rõ, và đồng ý tuân thủ toàn bộ các điều khoản được nêu trên.</p>
+
+        </div>
+
+        <div class="p-4 border-t bg-gray-50 text-right rounded-b-xl">
+            <button onclick="closeTermsModal()" class="bg-primary hover:bg-teal-700 text-white font-bold py-2 px-6 rounded-lg transition duration-300">
+                Đã hiểu
+            </button>
+        </div>
+    </div>
+</div>
+<footer class="bg-gray-100 mt-10 py-4">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm text-gray-500">
+        &copy; 2024 Zay Auction Demo. All rights reserved.
+    </div>
+</footer>
+
+<script>
+    const orderKey = 'currentDemoOrder';
+    const confirmView = document.getElementById('confirm-view');
+    const paymentView = document.getElementById('payment-view');
+    const historyView = document.getElementById('history-view');
+    // const loadingOverlay = document.getElementById('loading-overlay'); // KHÔNG CÒN DÙNG
+
+    // === THÊM MỚI BIẾN MODAL ===
+    const termsModal = document.getElementById('terms-modal');
+
+
+    // Dữ liệu mô phỏng đơn hàng (Mock Data)
+    const mockOrder = {
+        orderId: "A38-BID-20251111",
+        productName: "Đồng Hồ Cổ Thụy Sĩ - Phiên Bản Giới Hạn",
+        productImg: "https://placehold.co/100x100/38bdf8/ffffff?text=Watch", // Placeholder image
+        finalPrice: 50000000, // 50,000,000 VND
+        serviceRate: 0.04,
+        serviceFee: 0,
+        totalValue: 0,
+        escrowRate: 0.1, // Tỷ lệ ký quỹ 10%
+        escrowAmount: 0,
+        currentStatus: "AWAITING_ESCROW", // Trạng thái ban đầu: CHỜ KÝ QUỸ
+        escrowPayment: {
+            isPaid: false,
+            paymentMethod: null,
+            paidDate: null
+        }
+    };
+
+    // Hàm định dạng số tiền VND
+    function formatVND(amount) {
+        return Math.round(amount).toLocaleString('vi-VN') + ' VND';
+    }
+
+    // -------------------------------------------------------------
+    // LOGIC CHUNG: Khởi tạo, Render Trang, và Reset
+    // -------------------------------------------------------------
+
+    function initializeOrder() {
+        let order = localStorage.getItem(orderKey);
+        if (!order) {
+            // Tính toán các giá trị lần đầu tiên
+            mockOrder.serviceFee = mockOrder.finalPrice * mockOrder.serviceRate;
+            mockOrder.totalValue = mockOrder.finalPrice + mockOrder.serviceFee;
+            mockOrder.escrowAmount = mockOrder.totalValue * mockOrder.escrowRate;
+
+            localStorage.setItem(orderKey, JSON.stringify(mockOrder));
+            return mockOrder;
+        }
+        return JSON.parse(order);
+    }
+
+    function resetDemo() {
+        localStorage.removeItem(orderKey);
+        // Loại bỏ alert() để tránh gián đoạn
+        console.log('Demo đã được Reset. Tải lại trang.');
+        window.location.reload();
+    }
+
+    // Chuyển đổi giữa các View
+    function switchView(viewId) {
+        // Ẩn tất cả các view chính
+        [confirmView, paymentView, historyView].forEach(view => {
+            view.style.display = 'none';
+        });
+        // Ẩn modal (nếu nó đang mở)
+        closeTermsModal();
+        // Hiển thị view được yêu cầu
+        document.getElementById(viewId).style.display = 'block';
+    }
+
+    // === HÀM MỚI ĐỂ ĐIỀU KHIỂN MODAL ===
+    function openTermsModal(event) {
+        event.preventDefault(); // Ngăn thẻ <a> nhảy trang
+        termsModal.style.display = 'flex';
+    }
+
+    function closeTermsModal() {
+        termsModal.style.display = 'none';
+    }
+    // === KẾT THÚC HÀM MỚI ===
+
+
+    // -------------------------------------------------------------
+    // 1. LOGIC cho trang CONFIRM.HTML
+    // -------------------------------------------------------------
+    function renderConfirmView() {
+        const currentOrder = initializeOrder();
+        if (currentOrder.currentStatus !== 'AWAITING_ESCROW') {
+            // Nếu đã thanh toán, chuyển thẳng sang Lịch sử
+            return renderHistoryView();
+        }
+
+        // Hiển thị dữ liệu lên giao diện
+        document.getElementById('product-name').innerText = currentOrder.productName;
+        document.getElementById('product-img').src = currentOrder.productImg;
+        document.getElementById('product-id').innerText = currentOrder.orderId;
+
+        document.getElementById('confirm-final-price').innerText = formatVND(currentOrder.finalPrice);
+        document.getElementById('confirm-service-fee').innerText = formatVND(currentOrder.serviceFee);
+        document.getElementById('confirm-total-value').innerText = formatVND(currentOrder.totalValue);
+
+        document.getElementById('escrow-rate').innerText = `${currentOrder.escrowRate * 100}%`;
+        document.getElementById('escrow-amount').innerText = formatVND(currentOrder.escrowAmount);
+
+        const confirmBtn = document.getElementById('confirm-btn');
+        const agreementCheck = document.getElementById('agreement-check');
+
+        // Kích hoạt nút khi đồng ý điều khoản
+        agreementCheck.addEventListener('change', () => {
+            confirmBtn.disabled = !agreementCheck.checked;
+        });
+
+        // Chuyển sang trang thanh toán
+        confirmBtn.onclick = () => {
+            if (agreementCheck.checked) {
+                switchView('payment-view');
+                renderPaymentView();
+            }
+        };
+
+        switchView('confirm-view');
+    }
+
+    // -------------------------------------------------------------
+    // 2. LOGIC cho trang PAYMENT.HTML
+    // -------------------------------------------------------------
+    function renderPaymentView() {
+        const currentOrder = initializeOrder();
+
+        document.getElementById('payment-amount').innerText = formatVND(currentOrder.escrowAmount);
+        document.getElementById('payment-order-id').innerText = currentOrder.orderId;
+        document.getElementById('payment-transfer-content').innerText = `KYQUY_${currentOrder.orderId}`;
+
+        const payBtn = document.getElementById('pay-btn');
+        payBtn.innerText = 'Xác nhận Đã Hoàn tất Chuyển khoản';
+        payBtn.disabled = false;
+
+
+        payBtn.onclick = () => {
+            // Vô hiệu hóa và thay đổi text nút để mô phỏng loading
+            payBtn.disabled = true;
+            payBtn.innerHTML = '<span class="animate-spin inline-block mr-2 border-2 border-white border-t-transparent rounded-full w-4 h-4"></span> Đang xử lý...';
+
+            // Mô phỏng thời gian chờ 3 giây
+            setTimeout(() => {
+                // Cập nhật trạng thái đơn hàng (Logic cốt lõi)
+                let updatedOrder = JSON.parse(localStorage.getItem(orderKey));
+
+                updatedOrder.currentStatus = 'ESCROW_PAID';
+                updatedOrder.escrowPayment.isPaid = true;
+                updatedOrder.escrowPayment.paymentMethod = 'Bank Transfer (Mô phỏng)';
+                updatedOrder.escrowPayment.paidDate = new Date().toLocaleString('vi-VN');
+
+                localStorage.setItem(orderKey, JSON.stringify(updatedOrder));
+
+                // Chuyển sang Lịch sử
+                switchView('history-view');
+                renderHistoryView();
+            }, 3000);
+        };
+    }
+
+    // -------------------------------------------------------------
+    // 3. LOGIC cho trang HISTORY.HTML
+    // -------------------------------------------------------------
+    function renderHistoryView() {
+        const orderListContainer = document.getElementById('order-list');
+        const orderData = initializeOrder();
+
+        orderListContainer.innerHTML = ''; // Clear container
+
+        if (!orderData) {
+            orderListContainer.innerHTML = '<p class="text-center text-red-500 font-semibold py-10">Không tìm thấy đơn hàng. Vui lòng bắt đầu lại.</p>';
+            return;
+        }
+
+        let statusText = '';
+        let statusClasses = '';
+        let actionButton = '';
+
+        // Xác định trạng thái và hiển thị
+        if (orderData.currentStatus === 'ESCROW_PAID') {
+            statusText = 'ĐÃ KÝ QUỸ THÀNH CÔNG';
+            statusClasses = 'bg-primary text-white';
+            actionButton = `<button class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300">
+                                    Thanh Toán Phần Còn Lại
+                                </button>`;
+        } else {
+            statusText = 'CHỜ KÝ QUỸ';
+            statusClasses = 'bg-red-500 text-white';
+            actionButton = `<button onclick="switchView('confirm-view')" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300">
+                                    Tiếp tục Ký Quỹ
+                                </button>`;
+        }
+
+        const remainingAmount = orderData.totalValue - orderData.escrowAmount;
+
+        // Tạo Card đơn hàng với trạng thái mới
+        const cardHtml = `
+                <div class="bg-white p-6 rounded-xl custom-shadow border-4 border-l-${orderData.currentStatus === 'ESCROW_PAID' ? 'primary' : 'red-500'}">
+                    <div class="flex justify-between items-center mb-4">
+                        <h5 class="text-lg font-semibold text-gray-800">Đơn hàng: **${orderData.orderId}**</h5>
+                        <span class="px-3 py-1 text-sm font-semibold rounded-full ${statusClasses}">${statusText}</span>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 border-t pt-4">
+                        <div class="md:col-span-1">
+                            <img src="${orderData.productImg}" class="w-24 h-24 object-cover rounded-lg" alt="${orderData.productName}">
+                        </div>
+                        <div class="md:col-span-2 space-y-1">
+                            <p class="font-bold text-gray-900">${orderData.productName}</p>
+                            <p class="text-sm text-gray-600">Ngày ký quỹ: ${orderData.escrowPayment.paidDate || 'Chưa hoàn tất'}</p>
+                            <p class="text-sm">Tổng giá trị: <strong class="text-gray-800">${formatVND(orderData.totalValue)}</strong></p>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 pt-4 border-t flex justify-between items-center">
+                        <div>
+                            <p class="text-sm">Đã nộp Ký quỹ: <strong class="text-primary">${formatVND(orderData.escrowAmount)}</strong></p>
+                            <p class="text-lg font-bold">Còn lại: <strong class="text-red-600">${formatVND(remainingAmount)}</strong></p>
+                        </div>
+                        ${actionButton}
+                    </div>
+                </div>
+            `;
+        orderListContainer.innerHTML = cardHtml;
+    }
+
+    // -------------------------------------------------------------
+    // Khởi động ứng dụng: Bắt đầu từ trang Xác nhận
+    // -------------------------------------------------------------
+    document.addEventListener('DOMContentLoaded', () => {
+        renderConfirmView();
+    });
+
+</script>
+</body>
+</html>
