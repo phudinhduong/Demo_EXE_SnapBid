@@ -1,8 +1,40 @@
 # Default ignored files
 /shelf/
 /workspace.xml
+
 # Editor-based HTTP Client requests
 /httpRequests/
+
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
+
+# User-specific files
+/tasks.xml
+/usage.statistics.xml
+
+# Code style files
+/codeStyles/
+
+# Database files
+/*.db
+
+# Gradle files
+/.gradle/
+
+# Maven files
+/.idea/libraries/
+
+# Compiler output
+/out/
+/output/
+
+# IntelliJ IDEA files
+/*.iws
+/*.ipr
+
+# SonarLint files
+/sonarlint/
+
+# External dependencies
+/externalDependencies.xml
